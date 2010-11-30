@@ -6,10 +6,8 @@ use autodie;
 use namespace::autoclean;
 
 use DBI;
-use File::Slurp qw( read_file);
+use File::Slurp qw( read_file );
 use File::Spec;
-use File::Which qw( which );
-use File::Temp qw( tempdir);
 use List::AllUtils qw( first );
 use MooseX::Types::Moose qw( ArrayRef Bool Int Maybe Str );
 use MooseX::Types::Path::Class qw( Dir File );
