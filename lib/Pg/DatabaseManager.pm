@@ -163,10 +163,8 @@ has _pg_config => (
 sub update_or_install_db {
     my $self = shift;
 
-    unless ( $self->_can_connect() ) {
-        warn $self->_connect_failure_message();
-        return;
-    }
+    die $self->_connect_failure_message()
+        unless $self->_can_connect();
 
     print "\n" unless $self->quiet();
 
@@ -464,13 +462,13 @@ sub _run_migrations_for_version {
     my $dir = $self->migrations_dir()->subdir($version);
     unless ( -d $dir ) {
         warn "No migration direction for version $version (looked for $dir)!";
-        exit;
+        return;
     }
 
     my @files = sort grep { !$_->is_dir() } $dir->children();
     unless (@files) {
         warn "Migration directory exists but is empty ($dir)";
-        exit;
+        return;
     }
 
     for my $file (@files) {
@@ -670,7 +668,9 @@ TABLE> for details. Defaults to "Version">
 =item * migrations_dir
 
 The directory which contains migrations for the database. This is required,
-but the directory can be empty.
+but the directory can be empty. However, if the database needs to be migrated
+from one version to another, it expects to find migrations for every
+appropriate version in this directory.
 
 =item * drop
 
@@ -687,6 +687,15 @@ Setting this to true suppresses any output from this module.
 This is the one public "do it" method. It will update or install the database
 as needed. If the drop parameter was true, then it will drop any existing
 database first, meaning it will always install a new database from scratch.
+
+This method tests whether it can connect to the database server's template1
+database, and dies if it cannot connect.
+
+=head2 $manager->import_contrib_file( $file )
+
+Given a contrib file name such as "citext.sql" or "pgxml.sql", this method
+finds the file and imports it into the database. If it cannot find the named
+file, it dies.
 
 =head1 SUBCLASSING
 
