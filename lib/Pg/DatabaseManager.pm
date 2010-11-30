@@ -591,6 +591,9 @@ as part of a migration, for example:
 
 This is the entire migration file.
 
+This module always dumps the existing database (with data) to a file in the
+temp directory before running migrations.
+
 =head2 Testing Migrations
 
 See the L<Pg::DatabaseManager::TestMigrations> module for a tool which you can
