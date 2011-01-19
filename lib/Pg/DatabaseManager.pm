@@ -224,7 +224,7 @@ sub _connect_failure_message {
 
     $msg .= sprintf(
         "  %13s = %s\n", 'ssl',
-        $self->requires_ssl() ? 'required' : 'not required'
+        $self->ssl() ? 'required' : 'not required'
     );
 
     return $msg;
