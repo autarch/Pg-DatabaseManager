@@ -1,3 +1,9 @@
+0.05    2011-01-19
+
+- Some internal code attempted to call a non-existent method when the database
+  connection failed.
+
+
 0.04    2010-11-30
 
 - Is fourth time the charm. Added a missing prereq.
