@@ -526,7 +526,7 @@ or subclass it ...
 
   has '+app_name' => ( default => 'MyApp' );
 
-  has '+contrib_files => ( default => [ 'citext.sql' ] );
+  has '+contrib_files' => ( default => [ 'citext.sql' ] );
 
 =head1 DESCRIPTION
 
